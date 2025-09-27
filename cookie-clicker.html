@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Nyx-chan’s Cookie Clicker</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background: url("cookback.jpg")
+    }
+    h1 {
+      color: #6b3e26;
+    }
+    #cookie {
+      width: 300px;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+    #cookie:active {
+      transform: scale(0.9);
+    }
+    #score {
+      font-size: 1em;
+      margin: 20px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 2em;
+      border: none;
+      background: #6b3e26;
+      color: white;
+      border-radius: 10px;
+      cursor: pointer;
+      margin: 10px;
+    }
+    button:disabled {
+      background: #aaa;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+<body>
+  <h1>🍪 Nyx-chan’s Cookie Clicker 🍪</h1>
+  <img id="cookie" src="https://upload.wikimedia.org/wikipedia/commons/4/45/Chocolate_chip_cookie.png" alt="cookie">
+  <div id="score">Cookies: 0</div>
+  <button id="upgrade" disabled>Buy Upgrade (cost: 10)</button>
+
+  <script>
+    let cookies = 0;
+    let upgradeCost = 10;
+    let multiplier = 1;
+
+    const scoreDisplay = document.getElementById("score");
+    const cookie = document.getElementById("cookie");
+    const upgradeBtn = document.getElementById("upgrade");
+
+    cookie.addEventListener("click", () => {
+      cookies += multiplier;
+      updateScore();
+    });
+
+    upgradeBtn.addEventListener("click", () => {
+      if (cookies >= upgradeCost) {
+        cookies -= upgradeCost;
+        multiplier++;
+        upgradeCost *= 2;
+        upgradeBtn.textContent = `Buy Upgrade (cost: ${upgradeCost})`;
+        updateScore();
+      }
+    });
+
+    function updateScore() {
+      scoreDisplay.textContent = `Cookies: ${cookies}`;
+      upgradeBtn.disabled = cookies < upgradeCost;
+    }
+  </script>
+  
+</body>
+</html>
