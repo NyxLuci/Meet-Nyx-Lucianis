@@ -152,3 +152,30 @@ button:hover, .btn:hover {
     height: 220px;
   }
 }
+.hall-of-fame {
+  margin-top: 20px;
+  background: #fff0f6;
+  border: 3px dashed #ff70a6;
+  border-radius: 15px;
+  padding: 15px;
+  text-align: center;
+}
+
+.hall-of-fame h2 {
+  color: #ff3377;
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  text-shadow: 1px 1px #ffcce5;
+}
+
+.hall-of-fame ul {
+  list-style: none;
+  padding: 0;
+}
+
+.hall-of-fame li {
+  font-size: 1.1rem;
+  margin: 5px 0;
+  color: #ff70a6;
+  font-weight: 600;
+}
