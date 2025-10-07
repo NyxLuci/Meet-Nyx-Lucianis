@@ -23,7 +23,7 @@
   let obstacles = [];
   let spawnTimer = 0;
   let speed = 4.5;          // starting speed
-  const MAX_SPEED = 8;      // maximum speed
+  const MAX_SPEED = 6;      // maximum speed
   const gravity = 0.6;
   let score = 0, hi = 0;
 
