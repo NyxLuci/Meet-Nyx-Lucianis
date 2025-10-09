@@ -1,16 +1,13 @@
 // === Kawaii Custom Cursor with Fade ===
-const cursor = document.getElementById('cuteCursor');
-document.body.style.cursor = 'none';
+// Set custom cursor using JavaScript
+document.body.style.cursor = "url('Cute Purple Link Select.cur'), auto";
+
 
 // Mouse follow
 document.addEventListener('mousemove', e => {
   cursor.style.left = e.pageX + 'px';
   cursor.style.top = e.pageY + 'px';
 });
-
-// Cursor icons
-const heartIcon = 'cur.png';
-const pointerIcon = 'cutePointer.png';
 
 // Smooth cursor swap
 function swapCursor(newSrc) {
