@@ -249,10 +249,24 @@ footer {
 
 .bubble {
     width: 12px; height: 12px;
-    background-color: #ffd6f6;
+    background-color: #ff71e0;
     animation: bubbleFloat 12s linear infinite;
     z-index: 0;
+    border-radius: 50%;
+    opacity: 0.8;
+    pointer-events: none;
+    animation: float 8s linear forwards;
 }
+@keyframes float {
+  0% {
+    transform: translateY(0) translateX(0);
+  }
+  100% {
+    transform: translateY(-100vh) translateX(100vw);
+    opacity: 0;
+  }
+}
+
 
 @keyframes bubbleFloat {
     0% { transform: translateY(100vh) scale(0.5); opacity: 0.5; }
@@ -329,4 +343,7 @@ body.night a:hover { color: #881471; }
 }
 body.night #toggleTheme {
   color: #e0c3ff;
+}
+.night button{
+    border-radius: 10px;
 }
