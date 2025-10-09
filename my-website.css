@@ -277,3 +277,56 @@ footer {
     animation: pixelSpin 4s linear infinite;
     align-content: center;
 }
+
+/* 🌙 Night Mode */
+body.night {
+  background: linear-gradient(120deg, #160021, #2a003d);
+  color: #6a0dad;
+
+}
+body.night header.banner {
+  background: linear-gradient(120deg, #3a0066, #6a0dad);
+  border-bottom: 2px dashed #b980ff;
+}
+body.night section {
+  background: rgba(50, 0, 70, 0.7);
+  border: 2px solid #b980ff;
+  box-shadow: 0 8px 20px rgba(160, 90, 255, 0.4);
+}
+body.night button{
+    color: #8e18fc;
+    background-color: #8e18fc;
+    background: #6a0dad;
+}
+#toggleTheme {
+  text-shadow: 0 0 6px rgba(255,182,193,0.7);
+  animation: glowPulse 2.5s infinite ease-in-out;
+}
+@keyframes glowPulse {
+  0%,100% { text-shadow: 0 0 6px rgba(255,182,193,0.6); }
+  50% { text-shadow: 0 0 12px rgba(185,128,255,0.9); }
+}
+
+
+body.night a { color: #8e18fc; }
+body.night a:hover { color: #881471; }
+/* ================== TOGGLE BUTTON ================== */
+#toggleTheme {
+  position: fixed;
+  top: 15px;
+  right: 20px;
+  font-size: 24px;
+  background: transparent;
+  border: none;
+  color: #4b0082;
+  cursor: pointer;
+  z-index: 9999;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+#toggleTheme:hover {
+  transform: rotate(20deg) scale(1.2);
+  color: #ffb6c1;
+}
+body.night #toggleTheme {
+  color: #e0c3ff;
+}
