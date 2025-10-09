@@ -21,6 +21,7 @@ function swapCursor(newSrc) {
   }, 150);
 }
 
+
 // Hover effect
 document.querySelectorAll('a, button, li').forEach(el => {
   el.addEventListener('mouseenter', () => swapCursor(pointerIcon));
