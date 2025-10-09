@@ -205,27 +205,13 @@ footer {
     transform: translate(-50%, -50%);
 }
 /* ================== CUSTOM CURSOR ================== */
-#cuteCursor {
-    width: 120px;
-    height: 120px;
-    pointer-events: none;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 9999;
-    transform: translate(-50%, -50%);
-    transition: opacity 0.3s ease; /* smooth fade */
+body {
+  cursor: url('Cute\ Purple\ Link\ Select.cur'), auto;
 }
 
-#cuteCursor::before {
-    content: "💖";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 100px;
-    color: #ff69b4;
-    transition: opacity 0.3s ease; /* fade the icon */
+/* Optional: hover effects for links */
+a:hover {
+  cursor: url('Cute\ Purple\ Link\ Select.cur'), pointer;
 }
 
 
