@@ -15,23 +15,25 @@ app.post('/ask', async (req, res) => {
 
   try {
     const response = await axios.post(
-      'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent',
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${process.env.GOOGLE_API_KEY}`,
       {
-        contents: [{ parts: [{ text: message }] }]
+        contents: [
+          {
+            role: "user",
+            parts: [{ text: message }]
+          }
+        ]
       },
       {
         headers: {
-          'Authorization': `Bearer ${process.env.GOOGLE_API_KEY}`,
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json"
         }
       }
     );
 
-    const reply =
-      response.data?.candidates?.[0]?.content?.parts?.[0]?.text ||
-      "I couldn't understand, nya~";
-
+    const reply = response.data?.candidates?.[0]?.content?.parts?.[0]?.text || "I couldn't understand, nya~";
     res.json({ reply });
+
   } catch (error) {
     console.error(error.response?.data || error.message);
     res.status(500).json({ reply: "Oopsie, something went wrong! (≧ω≦)" });
