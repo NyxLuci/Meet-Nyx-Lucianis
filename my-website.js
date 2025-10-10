@@ -91,48 +91,64 @@ const greetings = [
 ];
 setTimeout(() => alert(greetings[Math.floor(Math.random() * greetings.length)]), 3000);
 
+// ...existing code...
 // === Music Controls ===
-const musicIcon = document.getElementById('musicIcon');
-const bgMusic1 = document.getElementById('bgMusic1');
-const bgMusic2 = document.getElementById('bgMusic2');
-const toggleBtn = document.getElementById('musicToggle');
-let currentTrack = 1;
-
-function playTrack(track) {
-  if (track === 1) {
-    bgMusic1.play();
-    bgMusic2.pause();
-    bgMusic2.currentTime = 0;
-    currentTrack = 1;
-  } else {
-    bgMusic2.play();
-    bgMusic1.pause();
-    bgMusic1.currentTime = 0;
-    currentTrack = 2;
+// safe call to animateStars if it exists
+if (typeof animateStars === 'function') {
+  try {
+    animateStars();
+  } catch (err) {
+    console.error('animateStars() failed:', err);
   }
 }
 
-bgMusic1.addEventListener("ended", () => playTrack(2));
-bgMusic2.addEventListener("ended", () => playTrack(1));
+const overlay = document.getElementById('playMusicOverlay');
+const themeMusic = document.getElementById('bgMusic1');
 
-musicIcon.addEventListener('click', () => {
-  const music = currentTrack === 1 ? bgMusic1 : bgMusic2;
-  if (music.paused) music.play();
-  else music.pause();
-});
+function safePlayMusic() {
+  if (!themeMusic) {
+    console.warn('bgMusic1 element not found');
+    return;
+  }
 
-toggleBtn.addEventListener('click', () => {
-  playTrack(currentTrack === 1 ? 2 : 1);
-});
-
-// === Theme Toggle ===
-const themeButton = document.getElementById("themeToggle");
-let isNight = false;
-
-function toggleTheme() {
-  isNight = !isNight;
-  document.body.classList.toggle('night', isNight);
-  themeButton.textContent = isNight ? "☀️ Day Mode" : "🌙 Night Mode";
+  // If you have a fadeInAudio helper use it, otherwise try play()
+  if (typeof fadeInAudio === 'function') {
+    try {
+      fadeInAudio(themeMusic);
+    } catch (err) {
+      console.error('fadeInAudio failed, falling back to play():', err);
+      themeMusic.play().catch(e => console.warn('Audio play rejected:', e));
+    }
+  } else {
+    themeMusic.play().catch(e => console.warn('Audio play rejected:', e));
+  }
 }
 
-themeButton.addEventListener("click", toggleTheme);
+// If overlay exists attach listener, otherwise still wire global first-interaction play
+if (overlay) {
+  overlay.addEventListener('click', () => {
+    safePlayMusic();
+    overlay.style.display = 'none';
+  });
+}
+
+function startMusic() {
+  safePlayMusic();
+  document.removeEventListener('click', startMusic);
+  document.removeEventListener('keydown', startMusic);
+}
+
+// Ensure first user interaction triggers playback (required by browsers)
+document.addEventListener('click', startMusic);
+document.addEventListener('keydown', startMusic);
+// ...existing code...
+// fade in helper
+// Play music on first user interaction
+function startMusic() {
+  fadeInAudio(themeMusic);
+  document.removeEventListener("click", startMusic);
+  document.removeEventListener("keydown", startMusic);
+}
+
+document.addEventListener("click", startMusic);
+document.addEventListener("keydown", startMusic);
