@@ -95,8 +95,45 @@ for (let i = 0; i < starCount; i++) {
   );
 }
 // === Theme Music with guaranteed play on first interaction ===
-const themeMusic = document.getElementById("themeMusic");
+// ...existing code...
+// === Theme Music with guaranteed play on first interaction ===
+// Make sure your HTML has: <audio id="contactMusic" src="contact.mp3" preload="auto"></audio>
+// and optionally <div id="playMusicOverlay">Click to play</div>
 
+const overlay = document.getElementById('playMusicOverlay');
+const themeMusic = document.getElementById('contactMusic'); // use element id, not filename
+
+function safeFadeInAudio(audio, duration = 2000) {
+  if (!audio) return;
+  audio.volume = 0;
+  audio.play().catch(() => console.log("Music blocked until user interacts"));
+  let start = null;
+  function step(timestamp) {
+    if (!start) start = timestamp;
+    const progress = timestamp - start;
+    audio.volume = Math.min((progress / duration) * 0.5, 0.5);
+    if (progress < duration) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+if (overlay && themeMusic) {
+  overlay.addEventListener('click', () => {
+    safeFadeInAudio(themeMusic);
+    overlay.style.display = 'none';
+  });
+}
+
+// Fallback: ensure a direct user interaction triggers playback
+function startMusicHandler(e) {
+  // Only run if themeMusic exists
+  if (themeMusic) safeFadeInAudio(themeMusic);
+  document.removeEventListener('click', startMusicHandler);
+  document.removeEventListener('keydown', startMusicHandler);
+}
+
+document.addEventListener('click', startMusicHandler);
+document.addEventListener('keydown', startMusicHandler);
 // fade in helper
 function fadeInAudio(audio, duration = 2000) {
   audio.volume = 0;
